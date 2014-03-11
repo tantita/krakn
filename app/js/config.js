@@ -11,7 +11,7 @@ angular.module('krakn.config', [])
    .constant('loginRedirectPath', '/login')
 
    // your Firebase URL goes here
-   .constant('FBURL', 'https://INSTANCE.firebaseio.com')
+   .constant('FBURL', 'https://krakn.firebaseio.com')
 
    //you can use this one to try out a demo of the seed
 //   .constant('FBURL', 'https://angularfire-seed.firebaseio.com');
