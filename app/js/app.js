@@ -1,8 +1,8 @@
 'use strict';
 
 // Declare app level module which depends on filters, and services
-angular.module('myApp',
-      ['myApp.config', 'myApp.routes', 'myApp.filters', 'myApp.services', 'myApp.directives', 'myApp.controllers',
+angular.module('krakn',
+      ['krakn.config', 'krakn.routes', 'krakn.filters', 'krakn.services', 'krakn.directives', 'krakn.controllers',
          'simpleLoginTools', 'routeSecurity']
    )
 
