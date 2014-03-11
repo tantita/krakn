@@ -2,17 +2,74 @@
 
 // Declare app level module which depends on filters, and services
 angular.module('krakn', [
-                           // 'ionic',
+                           'ionic',
                            'krakn.config',
-                           'krakn.routes',
+                           // 'krakn.routes',
                            'krakn.filters',
                            'krakn.services',
                            'krakn.directives',
                            'krakn.controllers',
                            'simpleLoginTools',
-                           'routeSecurity'
-                        ]
-   )
+                           'routeSecurity',
+                           'ngRoute',
+                           'ui.router'
+                        ])
+
+
+   .config(['$routeProvider', '$stateProvider', '$urlRouterProvider', function($routeProvider, $stateProvider, $urlRouterProvider) {
+
+     $stateProvider
+       .state('kraknMenu', {
+         url: "/krakn",
+         abstract: true,
+         templateUrl: "partials/menu.html",
+         controller: "MenuCtrl"
+       })
+
+       .state('kraknMenu.home', {
+         url: "/home",
+         views: {
+           'menuContent' :{
+             templateUrl: "partials/home.html",
+             controller: "HomeCtrl"
+           }
+         }
+       })
+
+       .state('kraknMenu.chat', {
+         url: "/chat",
+         views: {
+           'menuContent' :{
+             templateUrl: "partials/chat.html",
+             controller: "ChatCtrl"
+           }
+         }
+       })
+
+       .state('kraknMenu.account', {
+         url: "/account",
+         views: {
+           'menuContent' :{
+             authRequired: true, // must authenticate before viewing this page
+             templateUrl: "partials/account.html",
+             controller: "AccountCtrl"
+           }
+         }
+       })
+
+       .state('kraknMenu.login', {
+         url: "/login",
+         views: {
+           'menuContent' :{
+             templateUrl: "partials/login.html",
+             controller: "LoginCtrl"
+           }
+         }
+       })
+     
+     $urlRouterProvider.otherwise("/krakn/home");
+   }])
+
 
    .run(['loginService', '$rootScope', 'FBURL', function(loginService, $rootScope, FBURL) {
       if( FBURL === 'https://INSTANCE.firebaseio.com' ) {

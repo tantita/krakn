@@ -1,24 +1,52 @@
+<ion-view title="'Login'" left-buttons="leftButtons">
+    <ion-content has-header="true" padding="true">
+        <div class="list">
+            <form>
+                <label class="item item-input item-stacked-label">
+                    <span class="input-label">email</span>
+                    <input type="text" placeholder="you@email.com" ng-model="email" />
+                </label>
 
-<h2>Login Page</h2>
+                <label class="item item-input item-stacked-label">
+                    <span class="input-label">password</span>
+                    <input type="password" placeholder="embody strength" ng-model="pass" />
+                </label>
 
-<form>
-    <label>
-        <span>email</span>
-        <input type="text" ng-model="email" />
-    </label>
-    <label>
-        <span>password</span>
-        <input type="password" ng-model="pass" />
-    </label>
-    <label ng-cloak ng-show="createMode">
-        <span>confirm pass</span>
-        <input type="password" ng-model="confirm" />
-    </label>
-    <button ng-click="login()" ng-hide="createMode">Log In</button>
-    <button ng-click="createMode = true" ng-hide="createMode">Register</button>
-    <button ng-cloak ng-show="createMode" ng-click="createAccount()">Create Account</button>
-    <button ng-cloak ng-show="createMode" ng-click="createMode = false">Cancel</button>
+                <label class="item item-input item-stacked-label" ng-cloak ng-show="createMode">
+                    <span class="input-label">confirm pass</span>
+                    <input type="password" placeholder="embody strength" ng-model="confirm" />
+                </label>
 
-    <p ng-show="err" class="error">{{err}}</p>
-</form>
+                <div class="row">
+                    <div class="col col-50">
+                        <button class="button button-block button-positive" ng-click="login()" ng-hide="createMode">Log In</button>
+                    </div> <!-- end .col-50 -->
+
+                    <div class="col col-50">
+                        <button class="button button-block button-calm" ng-click="createMode = true" ng-hide="createMode">Register</button>
+                    </div> <!-- end .col-50 -->
+                </div> <!-- end .row -->
+
+
+                <div class="row">
+                    <div class="col col-50">
+                        <button class="button button-block button-calm" ng-cloak ng-show="createMode" ng-click="createAccount()">Create Account</button>
+                    </div> <!-- end .col-50 -->
+
+                    <div class="col col-50">
+                        <button class="button button-block button-assertive" ng-cloak ng-show="createMode" ng-click="createMode = false">Cancel</button>
+                    </div> <!-- end .col-50 -->
+                </div> <!-- end .row -->
+
+
+                <div class="row">
+                    <div class="col">
+                        <p ng-show="err" class="assertive text-center">{{err}}</p>
+                    </div> <!-- end .col -->
+                </div> <!-- end .row -->
+            </form>
+        </div> <!-- end .list -->
+    </ion-content>
+</ion-view>
+
 

@@ -1,63 +1,64 @@
+<ion-view title="'Account'" left-buttons="leftButtons">
+    <ion-content has-header="true" padding="true">
+        <div class="list">
+            <form>
+                <div class="item item-divider">Profile</div>
 
-<h2>Account</h2>
+                <label class="item item-input item-stacked-label">
+                    <span class="input-label">Name</span>
+                    <input type="text" name="name" ng-model="user.name"/>
+                </label>
 
-<form>
-    <fieldset>
-        <legend>Profile</legend>
+                <label class="item item-input item-stacked-label">
+                    <span class="input-label">Email</span>
+                    <input type="text" name="name" ng-model="user.email"/>
+                </label>
 
-        <label>
-            <span>Name:</span>
-            <input type="text" name="name" ng-model="user.name"/>
-        </label>
 
-        <label>
-            <span>Email:</span>
-            <input type="text" name="name" ng-model="user.email"/>
-        </label>
-    </fieldset>
 
-    <fieldset>
-        <legend>Change Password</legend>
+                <div class="item item-divider">Change Password</div>
 
-        <label>
-            <span>Old Password:</span>
-            <input type="password" ng-keypress="reset()" ng-model="oldpass"/>
-        </label>
+                <label class="item item-input item-stacked-label">
+                    <span class="input-label">Old Password</span>
+                    <input type="password" ng-keypress="reset()" ng-model="oldpass"/>
+                </label>
 
-        <label>
-            <span>New Password:</span>
-            <input type="password" ng-keypress="reset()" ng-model="newpass"/>
-        </label>
+                <label class="item item-input item-stacked-label">
+                    <span class="input-label">New Password</span>
+                    <input type="password" ng-keypress="reset()" ng-model="newpass"/>
+                </label>
 
-        <label>
-            <span>Confirm Password:</span>
-            <input type="password" ng-keypress="reset()" ng-model="confirm"/>
-        </label>
+                <label class="item item-input item-stacked-label">
+                    <span class="input-label">Confirm Password</span>
+                    <input type="password" ng-keypress="reset()" ng-model="confirm"/>
+                </label>
 
-        <button ng-click="updatePassword()">update password</button>
+                <button class="button button-block button-positive" ng-click="updatePassword()">update password</button>
 
-        <p class="error" ng-show="err">{{err}}</p>
-        <p class="good" ng-show="msg">{{msg}}</p>
-    </fieldset>
+                <p class="error" ng-show="err">{{err}}</p>
+                <p class="good" ng-show="msg">{{msg}}</p>
 
-    <fieldset>
-        <legend>Change Email</legend>
 
-        <label>
-            <span>New Email:</span>
-            <input type="text" ng-keypress="reset()" ng-model="newemail"/>
-        </label>
 
-        <label>
-            <span>Password:</span>
-            <input type="password" ng-keypress="reset()" ng-model="pass"/>
-        </label>
+                <div class="item item-divider">Change Email</div>
 
-        <button ng-click="updateEmail()">update email</button>
+                <label class="item item-input item-stacked-label">
+                    <span class="input-label">New Email</span>
+                    <input type="text" ng-keypress="reset()" ng-model="newemail"/>
+                </label>
 
-        <p class="error" ng-show="emailerr">{{emailerr}}</p>
-        <p class="good" ng-show="emailmsg">{{emailmsg}}</p>
-    </fieldset>
-</form>
+                <label class="item item-input item-stacked-label">
+                    <span class="input-label">Password</span>
+                    <input type="password" ng-keypress="reset()" ng-model="pass"/>
+                </label>
 
-<button ng-click="logout()">Log Out</button>
+                <button class="button button-block button-positive" ng-click="updateEmail()">update email</button>
+
+                <p class="error" ng-show="emailerr">{{emailerr}}</p>
+                <p class="good" ng-show="emailmsg">{{emailmsg}}</p>
+
+                <button class="button button-block button-assertive" ng-click="logout()">Log Out</button>
+            </form>
+        </div> <!-- end .list -->
+    </ion-content>
+</ion-view>

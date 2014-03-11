@@ -1,15 +1,25 @@
-<h2>Chat</h2>
+<ion-view title="'Chat'" left-buttons="leftButtons">
+	<ion-content has-header="true" padding="true">
+		<ion-list option-buttons="itemButtons"
+				  can-swipe="false"
+				  ng-show="messages">
 
-<form>
-  <input placeholder="Message..." ng-model="newMessage">
-  <button type="submit" ng-click="addMessage()">send</button>
-</form>
+			<ion-item ng-repeat="message in messages | orderByPriority | reverse"
+					  item="item"
+					  can-swipe="false">
+				<p>{{ message.text }}</p>
+			</ion-item>
 
-<ul id="messages" ng-show="messages">
-    <li ng-repeat="message in messages | orderByPriority | reverse">{{message.text}}</li>
-</ul>
+			<form>
+				<label class="item item-input item-stacked-label">
+					<span class="input-label">Your Message</span>
+					<input type="text"
+						   placeholder="something on your mind?"
+						   ng-model="newMessage" />
+				</label>
 
-<p>
-  Running the 'interpolate' filter:
-  {{ 'Current version is v%VERSION%.' | interpolate }}
-</p>
+				<button type="submit" class="button button-block button-positive" ng-click="addMessage()">send</button>
+			</form>
+		</ion-list>
+	</ion-content>
+</ion-view>

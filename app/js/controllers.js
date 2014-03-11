@@ -2,10 +2,32 @@
 
 /* Controllers */
 
-angular.module('krakn.controllers', [])
+angular.module('krakn.controllers', [
+                                       'ionic'
+                                    ])
+
+   // defined in index.html
+   .controller('MainCtrl', function($scope, $ionicSideMenuDelegate) {
+     $scope.leftButtons = [{
+       type: 'button-icon button-clear ion-navicon',
+       tap: function(e) {
+         $ionicSideMenuDelegate.toggleLeft($scope.$$childHead);
+       }
+     }];
+   })
+
+
+   .controller("MenuCtrl", function($scope) {
+     $scope.toggleMenu = function() {
+       $scope.sideMenuController.toggleLeft();
+     };
+   })
+
+
    .controller('HomeCtrl', ['$scope', 'syncData', function($scope, syncData) {
       syncData('syncedValue').$bind($scope, 'syncedValue');
    }])
+
 
   .controller('ChatCtrl', ['$scope', 'syncData', function($scope, syncData) {
       $scope.newMessage = null;
@@ -25,6 +47,7 @@ angular.module('krakn.controllers', [])
          }
       };
    }])
+
 
    .controller('LoginCtrl', ['$scope', 'loginService', '$location', function($scope, loginService, $location) {
       $scope.email = null;
@@ -81,6 +104,7 @@ angular.module('krakn.controllers', [])
          return !$scope.err;
       }
    }])
+
 
    .controller('AccountCtrl', ['$scope', 'loginService', 'changeEmailService', 'firebaseRef', 'syncData', '$location', 'FBURL', function($scope, loginService, changeEmailService, firebaseRef, syncData, $location, FBURL) {
       $scope.syncAccount = function() {
