@@ -1,9 +1,17 @@
 'use strict';
 
 // Declare app level module which depends on filters, and services
-angular.module('krakn',
-      ['krakn.config', 'krakn.routes', 'krakn.filters', 'krakn.services', 'krakn.directives', 'krakn.controllers',
-         'simpleLoginTools', 'routeSecurity']
+angular.module('krakn', [
+                           // 'ionic',
+                           'krakn.config',
+                           'krakn.routes',
+                           'krakn.filters',
+                           'krakn.services',
+                           'krakn.directives',
+                           'krakn.controllers',
+                           'simpleLoginTools',
+                           'routeSecurity'
+                        ]
    )
 
    .run(['loginService', '$rootScope', 'FBURL', function(loginService, $rootScope, FBURL) {

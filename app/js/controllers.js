@@ -17,7 +17,10 @@ angular.module('krakn.controllers', [])
       // add new messages to the list
       $scope.addMessage = function() {
          if( $scope.newMessage ) {
-            $scope.messages.$add({text: $scope.newMessage});
+            $scope.messages.$add({
+                                    'text': $scope.newMessage,
+                                    'user': $scope.user
+                                });
             $scope.newMessage = null;
          }
       };
