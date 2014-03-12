@@ -68,3 +68,26 @@ fieldset {
 [ng\:cloak], [ng-cloak], [data-ng-cloak], [x-ng-cloak], .ng-cloak, .x-ng-cloak {
     display: none !important;
 }
+
+#app-name {
+  font-size: 2rem;
+  letter-spacing: 2px;
+  font-weight: 300;
+}
+
+.nav-bar .title {
+  font-size: 2rem;
+  letter-spacing: 2px;
+  font-weight: 100;
+  text-transform: lowercase;
+}
+
+header .title img {
+  width: 30px;
+  margin-top: 5px;
+  margin-right: 5px;
+}
+
+#the-krakn {
+  color: white;
+}

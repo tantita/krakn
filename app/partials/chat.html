@@ -4,7 +4,7 @@
 				  can-swipe="false"
 				  ng-show="messages">
 
-			<ion-item ng-repeat="message in messages | orderByPriority | reverse"
+			<ion-item ng-repeat="message in messages | orderByPriority"
 					  item="item"
 					  can-swipe="false">
 				<p>{{ message.text }}</p>
@@ -18,7 +18,7 @@
 						   ng-model="newMessage" />
 				</label>
 
-				<button type="submit" class="button button-block button-positive" ng-click="addMessage()">send</button>
+				<button type="submit" class="button button-block button-calm" ng-click="addMessage()">send</button>
 			</form>
 		</ion-list>
 	</ion-content>
