@@ -10,16 +10,15 @@
 				<p>{{ message.text }}</p>
 			</ion-item>
 
-			<form>
-				<label class="item item-input item-stacked-label">
-					<span class="input-label">Your Message</span>
+			<div class="item item-input-inset">
+				<label class="item-input-wrapper">
 					<input type="text"
 						   placeholder="something on your mind?"
 						   ng-model="newMessage" />
 				</label>
 
-				<button type="submit" class="button button-block button-calm" ng-click="addMessage()">send</button>
-			</form>
+				<button type="submit" id="chat-send" class="button button-small button-positive" ng-click="addMessage()"><span class="ion-android-send"></span></button>
+			</div>
 		</ion-list>
 	</ion-content>
 </ion-view>

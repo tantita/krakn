@@ -1,11 +1,49 @@
 <ion-view title="'Home'" left-buttons="leftButtons">
 	<ion-content has-header="true" padding="true">
-		<p class="status good" ng-show-auth="login">Hello! You are logged in.</p>
-		<p class="status" ng-show-auth="logout">Not logged in</p>
-		<p class="status error" ng-show-auth="error">{{auth.error}}</p>
+		<div class="row">
+			<div class="col">
+				<h3>About krakn</h3>
+				<p>krank is a hybrid mobile web app built atop AngularJS, Firebase &amp; Ionic. Its puprose is to serve as an example app for the book, <i>AngularJS Deployment Essentials</i>.</p>
+			</div> <!-- end .col -->
+		</div> <!-- end .row -->
 
-		<!-- <input ng-model="syncedValue" type="text" /> <b>{{syncedValue}}</b> -->
+		<div class="row">
+			<div class="col">
+				<h3>Credits</h3>
 
-		<p>Open <a ng-href="{{FBURL}}/syncedValue">Forge</a> or a <a target="_blank" href="#/">new window</a> to see this input update in real time:</p>
+				<h4>Open Source Projects</h4>
+				<dl>
+					<dt>AngularJS</dt>
+					<dd>Super Heroic JavaScript MV* framwork</dd>
+
+					<dt>Firebase</dt>
+					<dd>Real-time cloud data storage &amp; syncronization</dd>
+
+					<dt>Ionic Framework</dt>
+					<dd>Front-end framework for the front-end of hybrid mobile apps</dd>
+
+					<dt>Google Web Fonts</dt>
+					<dd>Open Sans</dd>
+
+					<dt>The Noun Project</dt>
+					<dd>Octopus - Designed by Yuliya Po - Lisbon, PT - 2012</dd>
+				</dl>
+			</div> <!-- end .col -->
+		</div> <!-- end .row -->
+
+		<div class="row">
+			<div class="col col-50">
+				<h4>Author</h4>
+				<h5>Zachariah Moreno</h5>
+			</div> <!-- end .col-50 -->
+
+			<div class="col col-50">
+				<a href="https://github.com/XachMoreno/krakn">
+					<button id="github-btn" class="button button-block button-dark">
+						<span class="ion-social-github"></span>
+					</button>
+				</a>
+			</div> <!-- end .col-50 -->
+		</div> <!-- end .row -->
 	</ion-content>
 </ion-view>
