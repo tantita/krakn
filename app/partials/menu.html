@@ -17,8 +17,9 @@
     <ion-content has-header="true">
       <ul class="list">
         <a href="#/krakn/home" class="item" ng-click="toggleMenu()">home</a>
-        <a href="#/krakn/chat" class="item" ng-click="toggleMenu()">chat</a>
         <a href="#/krakn/login" class="item" ng-click="toggleMenu()" ng-show-auth="['logout','error']">login</a>
+        <!-- Must be authenticated to access -->
+        <a href="#/krakn/chat" class="item" ng-click="toggleMenu()" ng-show-auth="'login'">chat</a>
         <a href="#/krakn/account" class="item" ng-click="toggleMenu()" ng-show-auth="'login'">account</a>
         <a href="#/krakn/login" class="item" ng-click="logout()" ng-show-auth="'login'">log out</a>
 

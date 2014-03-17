@@ -19,6 +19,7 @@ angular.module('krakn', [
    .config(['$routeProvider', '$stateProvider', '$urlRouterProvider', function($routeProvider, $stateProvider, $urlRouterProvider) {
 
      $stateProvider
+       // Abstract menu state that routes all other states
        .state('kraknMenu', {
          url: "/krakn",
          abstract: true,
@@ -40,6 +41,7 @@ angular.module('krakn', [
          url: "/chat",
          views: {
            'menuContent' :{
+             authRequired: true, // Must be authenticated to access
              templateUrl: "partials/chat.html",
              controller: "ChatCtrl"
            }
@@ -50,7 +52,7 @@ angular.module('krakn', [
          url: "/account",
          views: {
            'menuContent' :{
-             authRequired: true, // must authenticate before viewing this page
+             authRequired: true, // Must be authenticated to access
              templateUrl: "partials/account.html",
              controller: "AccountCtrl"
            }
