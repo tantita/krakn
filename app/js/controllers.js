@@ -49,61 +49,90 @@ angular.module('krakn.controllers', [
    }])
 
 
-   .controller('LoginCtrl', ['$scope', 'loginService', '$location', function($scope, loginService, $location) {
-      $scope.email = null;
-      $scope.pass = null;
-      $scope.confirm = null;
-      $scope.createMode = false;
+   .controller('LoginCtrl', ['$scope', 'loginService', '$location',
+      function($scope, loginService, $location) {
+         $scope.data = {
+            "email"        : null,
+            "pass"         : null,
+            "confirm"      : null,
+            "createMode"   : false
+         }
 
-      $scope.login = function(cb) {
-         $scope.err = null;
-         if( !$scope.email ) {
-            $scope.err = 'Please enter an email address';
-         }
-         else if( !$scope.pass ) {
-            $scope.err = 'Please enter a password';
-         }
-         else {
-            loginService.login($scope.email, $scope.pass, function(err, user) {
-               $scope.err = err? err + '' : null;
-               if( !err ) {
-                  cb && cb(user);
-               }
-            });
-         }
-      };
-
-      $scope.createAccount = function() {
-         $scope.err = null;
-         if( assertValidLoginAttempt() ) {
-            loginService.createAccount($scope.email, $scope.pass, function(err, user) {
-               if( err ) {
+         $scope.login = function(cb) {
+            $scope.err = null;
+            if( !$scope.data.email ) {
+               $scope.err = 'Please enter an email address';
+            }
+            else if( !$scope.data.pass ) {
+               $scope.err = 'Please enter a password';
+            }
+            else {
+               loginService.login($scope.data.email, $scope.data.pass, function(err, user) {
                   $scope.err = err? err + '' : null;
-               }
-               else {
-                  // must be logged in before I can write to my profile
-                  $scope.login(function() {
-                     loginService.createProfile(user.uid, user.email);
-                     $location.path('/account');
-                  });
-               }
-            });
-         }
-      };
+                  if( !err ) {
+                     cb && cb(user);
+                     $location.path('krakn/chat');
+                  }
+               });
+            }
+         };
 
-      function assertValidLoginAttempt() {
-         if( !$scope.email ) {
-            $scope.err = 'Please enter an email address';
+
+         // $scope.email = null;
+         // $scope.pass = null;
+         // $scope.data.confirm = null;
+         // $scope.createMode = false;
+
+         // $scope.login = function(cb) {
+         //    $scope.err = null;
+         //    if( !$scope.email ) {
+         //       $scope.err = 'Please enter an email address';
+         //    }
+         //    else if( !$scope.pass ) {
+         //       $scope.err = 'Please enter a password';
+         //    }
+         //    else {
+         //       loginService.login($scope.email, $scope.pass, function(err, user) {
+         //          $scope.err = err? err + '' : null;
+         //          if( !err ) {
+         //             cb && cb(user);
+         //          }
+         //       });
+         //    }
+         // };
+
+         $scope.createAccount = function() {
+            $scope.err = null;
+            if( assertValidLoginAttempt() ) {
+               loginService.createAccount($scope.data.email, $scope.data.pass,
+                  function(err, user) {
+                     if( err ) {
+                        $scope.err = err? err + '' : null;
+                     }
+                     else {
+                        // must be logged in before I can write to my profile
+                        $scope.login(function() {
+                           loginService.createProfile(user.uid, user.email);
+                           $location.path('krakn/account');
+                        });
+                     }
+                  });
+            }
+         };
+
+         function assertValidLoginAttempt() {
+            if( !$scope.data.email ) {
+               $scope.err = 'Please enter an email address';
+            }
+            else if( !$scope.data.pass ) {
+               $scope.err = 'Please enter a password';
+            }
+            else if( $scope.data.pass !== $scope.data.confirm ) {
+               $scope.err = 'Passwords do not match';
+            }
+            return !$scope.err;
          }
-         else if( !$scope.pass ) {
-            $scope.err = 'Please enter a password';
-         }
-         else if( $scope.pass !== $scope.confirm ) {
-            $scope.err = 'Passwords do not match';
-         }
-         return !$scope.err;
-      }
-   }])
+      }])
 
 
    .controller('AccountCtrl', ['$scope', 'loginService', 'changeEmailService', 'firebaseRef', 'syncData', '$location', 'FBURL', function($scope, loginService, changeEmailService, firebaseRef, syncData, $location, FBURL) {
@@ -118,11 +147,14 @@ angular.module('krakn.controllers', [
 
       $scope.logout = function() {
          loginService.logout();
+         $location.path('krakn/login');
       };
 
-      $scope.oldpass = null;
-      $scope.newpass = null;
-      $scope.confirm = null;
+      $scope.data = {
+         "oldpass"     : null,
+         "newpass"     : null,
+         "confirm"     : null
+      }
 
       $scope.reset = function() {
          $scope.err = null;
@@ -146,17 +178,17 @@ angular.module('krakn.controllers', [
       function buildPwdParms() {
          return {
             email: $scope.auth.user.email,
-            oldpass: $scope.oldpass,
-            newpass: $scope.newpass,
-            confirm: $scope.confirm,
+            oldpass: $scope.data.oldpass,
+            newpass: $scope.data.newpass,
+            confirm: $scope.data.confirm,
             callback: function(err) {
                if( err ) {
                   $scope.err = err;
                }
                else {
-                  $scope.oldpass = null;
-                  $scope.newpass = null;
-                  $scope.confirm = null;
+                  $scope.data.oldpass = null;
+                  $scope.data.newpass = null;
+                  $scope.data.confirm = null;
                   $scope.msg = 'Password updated!';
                }
             }
