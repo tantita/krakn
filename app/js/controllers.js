@@ -17,11 +17,17 @@ angular.module('krakn.controllers', [
    })
 
 
-   .controller("MenuCtrl", function($scope) {
+   .controller("MenuCtrl", ['$scope', 'loginService', '$location', function($scope, loginService, $location) {
      $scope.toggleMenu = function() {
        $scope.sideMenuController.toggleLeft();
      };
-   })
+
+     $scope.logout = function() {
+         loginService.logout();
+         $scope.toggleMenu();
+         // $location.path('krakn/login');
+     };
+   }])
 
 
    .controller('HomeCtrl', ['$scope', 'syncData', function($scope, syncData) {
