@@ -36,13 +36,23 @@ angular.module('krakn.controllers', [
 
 
   .controller('ChatCtrl', ['$scope', 'syncData', function($scope, syncData) {
+      // $scope.syncAccount = function() {
+      //    $scope.user = {};
+      //    syncData(['users', $scope.auth.user.uid]).$bind($scope, 'user').then(function(unBind) {
+      //       $scope.unBindAccount = unBind;
+      //    });
+      // };
+      // // set initial binding
+      // $scope.syncAccount();
+
       $scope.data = {
          newMessage : null
+         // , user       : $scope.user.name
       }
 
       // constrain number of messages by limit into syncData
       // add the array into $scope.messages
-      $scope.messages = syncData('messages', 10);
+      $scope.messages = syncData('messages');
 
       // add new messages to the list
       $scope.addMessage = function() {
@@ -50,6 +60,7 @@ angular.module('krakn.controllers', [
          if( $scope.data.newMessage ) {
             $scope.messages.$add({
                                     text: $scope.data.newMessage
+                                    // , user: $scope.user.name
                                 });
             $scope.data.newMessage = null;
          }

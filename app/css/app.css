@@ -119,6 +119,17 @@ dd:last-child {
   color: white;
 }
 
+#chat-input {
+  border-top: 2px solid #ACACAC;
+}
+
+#chat-input input {
+  padding-left: 4px;
+height: 29px;
+background: inherit;
+line-height: 18px;
+}
+
 
 /*http://stackoverflow.com/questions/13953053/animate-bubbles-upwards-continuously-with-css3*/
 
