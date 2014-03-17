@@ -1,5 +1,5 @@
 <ion-view title="'Chat'" left-buttons="leftButtons">
-	<ion-content has-header="true" padding="true">
+	<ion-content has-header="true" padding="false">
 		<ion-list option-buttons="itemButtons"
 				  can-swipe="false"
 				  ng-show="messages">
@@ -14,11 +14,12 @@
 				<label class="item-input-wrapper">
 					<input type="text"
 						   placeholder="something on your mind?"
-						   ng-model="newMessage" />
+						   ng-model="data.newMessage" />
 				</label>
 
 				<button type="submit" id="chat-send" class="button button-small button-positive" ng-click="addMessage()"><span class="ion-android-send"></span></button>
 			</div>
+			<p class="error" ng-show="err">{{err}}</p>
 		</ion-list>
 	</ion-content>
 </ion-view>

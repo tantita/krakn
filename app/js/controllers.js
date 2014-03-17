@@ -36,7 +36,9 @@ angular.module('krakn.controllers', [
 
 
   .controller('ChatCtrl', ['$scope', 'syncData', function($scope, syncData) {
-      $scope.newMessage = null;
+      $scope.data = {
+         newMessage : null
+      }
 
       // constrain number of messages by limit into syncData
       // add the array into $scope.messages
@@ -44,12 +46,15 @@ angular.module('krakn.controllers', [
 
       // add new messages to the list
       $scope.addMessage = function() {
-         if( $scope.newMessage ) {
+         $scope.err = null;
+         if( $scope.data.newMessage ) {
             $scope.messages.$add({
-                                    'text': $scope.newMessage,
-                                    'user': $scope.user
+                                    text: $scope.data.newMessage
                                 });
-            $scope.newMessage = null;
+            $scope.data.newMessage = null;
+         }
+         else {
+            $scope.err = 'Please include a message before posting';
          }
       };
    }])
@@ -58,10 +63,10 @@ angular.module('krakn.controllers', [
    .controller('LoginCtrl', ['$scope', 'loginService', '$location',
       function($scope, loginService, $location) {
          $scope.data = {
-            "email"        : null,
-            "pass"         : null,
-            "confirm"      : null,
-            "createMode"   : false
+            "email"      : null,
+            "pass"       : null,
+            "confirm"    : null,
+            "createMode" : false
          }
 
          $scope.login = function(cb) {
@@ -83,29 +88,6 @@ angular.module('krakn.controllers', [
             }
          };
 
-
-         // $scope.email = null;
-         // $scope.pass = null;
-         // $scope.data.confirm = null;
-         // $scope.createMode = false;
-
-         // $scope.login = function(cb) {
-         //    $scope.err = null;
-         //    if( !$scope.email ) {
-         //       $scope.err = 'Please enter an email address';
-         //    }
-         //    else if( !$scope.pass ) {
-         //       $scope.err = 'Please enter a password';
-         //    }
-         //    else {
-         //       loginService.login($scope.email, $scope.pass, function(err, user) {
-         //          $scope.err = err? err + '' : null;
-         //          if( !err ) {
-         //             cb && cb(user);
-         //          }
-         //       });
-         //    }
-         // };
 
          $scope.createAccount = function() {
             $scope.err = null;
@@ -157,14 +139,14 @@ angular.module('krakn.controllers', [
       };
 
       $scope.data = {
-         "oldpass"     : null,
-         "newpass"     : null,
-         "confirm"     : null
+         "oldpass" : null,
+         "newpass" : null,
+         "confirm" : null
       }
 
       $scope.reset = function() {
-         $scope.err = null;
-         $scope.msg = null;
+         $scope.err      = null;
+         $scope.msg      = null;
          $scope.emailerr = null;
          $scope.emailmsg = null;
       };
@@ -195,7 +177,7 @@ angular.module('krakn.controllers', [
                   $scope.data.oldpass = null;
                   $scope.data.newpass = null;
                   $scope.data.confirm = null;
-                  $scope.msg = 'Password updated!';
+                  $scope.msg          = 'Password updated!';
                }
             }
          };
@@ -214,7 +196,7 @@ angular.module('krakn.controllers', [
                   // reinstate binding
                   $scope.syncAccount();
                   $scope.newemail = null;
-                  $scope.pass = null;
+                  $scope.pass     = null;
                   $scope.emailmsg = 'Email updated!';
                }
             }
