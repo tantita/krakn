@@ -130,6 +130,11 @@ background: inherit;
 line-height: 18px;
 }
 
+#login {
+  background: url('../img/animals_octopus_wallpaper-HD.jpg') no-repeat center center fixed;
+  -webkit-background-size: cover;
+}
+
 
 /*http://stackoverflow.com/questions/13953053/animate-bubbles-upwards-continuously-with-css3*/
 

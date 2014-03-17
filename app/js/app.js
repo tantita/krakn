@@ -11,6 +11,7 @@ angular.module('krakn', [
                            'krakn.controllers',
                            'simpleLoginTools',
                            'routeSecurity',
+                           // 'ngAnimate',
                            'ngRoute',
                            'ui.router'
                         ])
