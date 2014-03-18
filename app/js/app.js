@@ -74,17 +74,24 @@ angular.module('krakn', [
    }])
 
 
-   .run(['loginService', '$rootScope', 'FBURL', function(loginService, $rootScope, FBURL) {
-      if( FBURL === 'https://INSTANCE.firebaseio.com' ) {
-         // double-check that the app has been configured
-         angular.element(document.body).html('<h1>Please configure app/js/config.js before running!</h1>');
-         setTimeout(function() {
-            angular.element(document.body).removeClass('hide');
-         }, 250);
-      }
-      else {
-         // establish authentication
-         $rootScope.auth = loginService.init('/login');
-         $rootScope.FBURL = FBURL;
-      }
-   }]);
+   .run(['loginService', '$rootScope', 'FBURL', '$location', '$ionicScrollDelegate',
+      function(loginService, $rootScope, FBURL, $location, $ionicScrollDelegate) {
+        if( FBURL === 'https://INSTANCE.firebaseio.com' ) {
+           // double-check that the app has been configured
+           angular.element(document.body).html('<h1>Please configure app/js/config.js before running!</h1>');
+           setTimeout(function() {
+              angular.element(document.body).removeClass('hide');
+           }, 250);
+        }
+        else {
+           // establish authentication
+           $rootScope.auth = loginService.init('/login');
+           $rootScope.FBURL = FBURL;
+        }
+
+         // only scroll to the bottom if on chat view
+         if($location.$$path == 'krakn/chat') {
+           $ionicScrollDelegate.scrollBottom(true);
+         }
+     }
+  ]);

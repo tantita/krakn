@@ -3,10 +3,11 @@
 /* Controllers */
 
 angular.module('krakn.controllers', [
-                                       'ionic'
+                                       'ionic',
+                                       'ngAnimate'
                                     ])
 
-   // defined in index.html
+   // defined in index.html, all other controllers defined in app.js
    .controller('MainCtrl', function($scope, $ionicSideMenuDelegate) {
      $scope.leftButtons = [{
        type: 'button-icon button-clear ion-navicon',
@@ -17,7 +18,7 @@ angular.module('krakn.controllers', [
    })
 
 
-   .controller("MenuCtrl", ['$scope', 'loginService', '$location', function($scope, loginService, $location) {
+   .controller("MenuCtrl", ['$scope', 'loginService', '$location', '$ionicScrollDelegate', function($scope, loginService, $location, $ionicScrollDelegate) {
      $scope.toggleMenu = function() {
        $scope.sideMenuController.toggleLeft();
      };
@@ -35,92 +36,98 @@ angular.module('krakn.controllers', [
    }])
 
 
-  .controller('ChatCtrl', ['$scope', 'syncData', '$ionicScrollDelegate', '$ionicLoading', function($scope, syncData, $ionicScrollDelegate, $ionicLoading) {
-      // $scope.syncAccount = function() {
-      //    $scope.user = {};
-      //    syncData(['users', $scope.auth.user.uid]).$bind($scope, 'user').then(function(unBind) {
-      //       $scope.unBindAccount = unBind;
-      //    });
-      // };
-      // // set initial binding
-      // $scope.syncAccount();
+  .controller('ChatCtrl', ['$scope', 'loginService', 'changeEmailService', 'firebaseRef', 'syncData', '$ionicScrollDelegate', '$ionicLoading', 'FBURL',
+      function($scope, loginService, changeEmailService, firebaseRef, syncData, $ionicScrollDelegate, $ionicLoading, FBURL) {
+         $scope.syncAccount = function() {
+            $scope.user = {};
+            syncData(['users', $scope.auth.user.uid]).$bind($scope, 'user');
+         };
+         // set initial binding
+         $scope.syncAccount();
 
-      $scope.data = {
-         newMessage : null
-         // , user       : $scope.user.name
+         $scope.data = {
+            newMessage : null,
+            user       : $scope.user.name
+         }
+
+         // constrain number of messages by limit into syncData
+         // add the array into $scope.messages
+         $scope.messages = syncData('messages', 20);
+
+         // displayed as chat input placholder
+         $scope.feedback = 'something on your mind?';
+         // displays as class on chat input placeholder
+         $scope.feeling  = 'stable';
+
+         // add new messages to the list
+         $scope.addMessage = function() {
+            if( $scope.data.newMessage ) {
+               $scope.messages.$add({
+                                       text: $scope.data.newMessage,
+                                       user: $scope.data.user
+                                   });
+               $scope.data.newMessage = null;
+
+               // scroll the view up when new message added
+               $ionicScrollDelegate.scrollBottom(true);
+
+               $scope.feedback = 'Done! What\'s next?';
+               $scope.feeling  = 'stable';
+            }
+            else {
+               $scope.feedback = 'Please write a message before sending';
+               $scope.feeling  = 'assertive';
+            }
+         };
+
+         $ionicScrollDelegate.scrollBottom(true);
+
+
+         // Trigger the loading indicator
+        $scope.show = function() {
+
+          // Show the loading overlay and text
+          $scope.loading = $ionicLoading.show({
+
+            // The text to display in the loading indicator
+            content: 'Loading',
+
+            // The animation to use
+            animation: 'fade-in',
+
+            // Will a dark overlay or backdrop cover the entire view
+            showBackdrop: true,
+
+            // The maximum width of the loading indicator
+            // Text will be wrapped if longer than maxWidth
+            maxWidth: 200,
+
+            // The delay in showing the indicator
+            showDelay: 500
+          });
+        };
+
+        // Hide the loading indicator
+        $scope.hide = function(){
+          $scope.loading.hide();
+        };
+
+        function deleteMessage(item) {
+
+        }
+
+        // Bottoms that display when a list item is swipped to the left
+        $scope.itemButtons = [
+          {
+            text: '',
+            type: 'button-assertive icon ion-android-trash',
+            onTap: function(item) {
+              deleteMessage(item);
+            }
+          }
+        ];
       }
-
-      // constrain number of messages by limit into syncData
-      // add the array into $scope.messages
-      $scope.messages = syncData('messages', 20);
-
-      // displayed as chat input placholder
-      $scope.feedback = 'something on your mind?';
-      // displays as class on chat input placeholder
-      $scope.feeling  = 'stable';
-
-      // add new messages to the list
-      $scope.addMessage = function() {
-         if( $scope.data.newMessage ) {
-            $scope.messages.$add({
-                                    text: $scope.data.newMessage
-                                    // , user: $scope.user.name
-                                });
-            $scope.data.newMessage = null;
-
-            $scope.feedback = 'Done! What\'s next?';
-            $scope.feeling  = 'stable';
-         }
-         else {
-            $scope.feedback = 'Please write a message before sending';
-            $scope.feeling  = 'assertive';
-         }
-      };
-
-      // $scope.$broadcast('scroll.scrollBottom');
-      // $ionicScrollDelegate.scrollBottom(animate);
-
-
-      // Trigger the loading indicator
-     $scope.show = function() {
-
-       // Show the loading overlay and text
-       $scope.loading = $ionicLoading.show({
-
-         // The text to display in the loading indicator
-         content: 'Loading',
-
-         // The animation to use
-         animation: 'fade-in',
-
-         // Will a dark overlay or backdrop cover the entire view
-         showBackdrop: true,
-
-         // The maximum width of the loading indicator
-         // Text will be wrapped if longer than maxWidth
-         maxWidth: 200,
-
-         // The delay in showing the indicator
-         showDelay: 500
-       });
-     };
-
-     // Hide the loading indicator
-     $scope.hide = function(){
-       $scope.loading.hide();
-     };
-
-
-     $scope.itemButtons = [
-       {
-         text: '',
-         type: 'button-assertive icon ion-android-trash',
-         onTap: function(item) {
-           alert('Delete Item: ' + item.id);
-         }
-       }
-     ];
-   }])
+   ])
 
 
    .controller('LoginCtrl', ['$scope', 'loginService', '$location',
@@ -186,84 +193,81 @@ angular.module('krakn.controllers', [
       }])
 
 
-   .controller('AccountCtrl', ['$scope', 'loginService', 'changeEmailService', 'firebaseRef', 'syncData', '$location', 'FBURL', function($scope, loginService, changeEmailService, firebaseRef, syncData, $location, FBURL) {
-      $scope.syncAccount = function() {
-         $scope.user = {};
-         syncData(['users', $scope.auth.user.uid]).$bind($scope, 'user').then(function(unBind) {
-            $scope.unBindAccount = unBind;
-         });
-      };
-      // set initial binding
-      $scope.syncAccount();
-
-      $scope.logout = function() {
-         loginService.logout();
-         $location.path('krakn/login');
-      };
-
-      $scope.data = {
-         "oldpass" : null,
-         "newpass" : null,
-         "confirm" : null
-      }
-
-      $scope.reset = function() {
-         $scope.err      = null;
-         $scope.msg      = null;
-         $scope.emailerr = null;
-         $scope.emailmsg = null;
-      };
-
-      $scope.updatePassword = function() {
-         $scope.reset();
-         loginService.changePassword(buildPwdParms());
-      };
-
-      $scope.updateEmail = function() {
-        $scope.reset();
-        // disable bind to prevent junk data being left in firebase
-        $scope.unBindAccount();
-        changeEmailService(buildEmailParms());
-      };
-
-      function buildPwdParms() {
-         return {
-            email: $scope.auth.user.email,
-            oldpass: $scope.data.oldpass,
-            newpass: $scope.data.newpass,
-            confirm: $scope.data.confirm,
-            callback: function(err) {
-               if( err ) {
-                  $scope.err = err;
-               }
-               else {
-                  $scope.data.oldpass = null;
-                  $scope.data.newpass = null;
-                  $scope.data.confirm = null;
-                  $scope.msg          = 'Password updated!';
-               }
-            }
+   .controller('AccountCtrl', ['$scope', 'loginService', 'changeEmailService', 'firebaseRef', 'syncData', 'FBURL',
+      function($scope, loginService, changeEmailService, firebaseRef, syncData, FBURL) {
+         
+         $scope.syncAccount = function() {
+            $scope.user = {};
+            syncData(['users', $scope.auth.user.uid]).$bind($scope, 'user').then(function(unBind) {
+               $scope.unBindAccount = unBind;
+            });
          };
-      }
-      function buildEmailParms() {
-         return {
-            newEmail: $scope.newemail,
-            pass: $scope.pass,
-            callback: function(err) {
-               if( err ) {
-                  $scope.emailerr = err;
-                  // reinstate binding
-                  $scope.syncAccount();
-               }
-               else {
-                  // reinstate binding
-                  $scope.syncAccount();
-                  $scope.newemail = null;
-                  $scope.pass     = null;
-                  $scope.emailmsg = 'Email updated!';
-               }
-            }
-         };
-      }
+         // set initial binding
+         $scope.syncAccount();
 
-   }]);
+         $scope.data = {
+            "oldpass" : null,
+            "newpass" : null,
+            "confirm" : null
+         }
+
+         $scope.reset = function() {
+            $scope.err      = null;
+            $scope.msg      = null;
+            $scope.emailerr = null;
+            $scope.emailmsg = null;
+         };
+
+         $scope.updatePassword = function() {
+            $scope.reset();
+            loginService.changePassword(buildPwdParms());
+         };
+
+         $scope.updateEmail = function() {
+           $scope.reset();
+           // disable bind to prevent junk data being left in firebase
+           $scope.unBindAccount();
+           changeEmailService(buildEmailParms());
+         };
+
+         function buildPwdParms() {
+            return {
+               email: $scope.auth.user.email,
+               oldpass: $scope.data.oldpass,
+               newpass: $scope.data.newpass,
+               confirm: $scope.data.confirm,
+               callback: function(err) {
+                  if( err ) {
+                     $scope.err = err;
+                  }
+                  else {
+                     $scope.data.oldpass = null;
+                     $scope.data.newpass = null;
+                     $scope.data.confirm = null;
+                     $scope.msg          = 'Password updated!';
+                  }
+               }
+            };
+         }
+         function buildEmailParms() {
+            return {
+               newEmail: $scope.newemail,
+               pass: $scope.pass,
+               callback: function(err) {
+                  if( err ) {
+                     $scope.emailerr = err;
+                     // reinstate binding
+                     $scope.syncAccount();
+                  }
+                  else {
+                     // reinstate binding
+                     $scope.syncAccount();
+                     $scope.newemail = null;
+                     $scope.pass     = null;
+                     $scope.emailmsg = 'Email updated!';
+                  }
+               }
+            };
+         }
+      }
+   ]);
