@@ -1,4 +1,4 @@
-/*==========================================
+==========================================
   Ionic overrides & enhancements
 ==========================================*/
 
@@ -73,6 +73,14 @@ fieldset {
 
 [ng\:cloak], [ng-cloak], [data-ng-cloak], [x-ng-cloak], .ng-cloak, .x-ng-cloak {
     display: none !important;
+}
+
+/* http://forum.ionicframework.com/t/android-keypad-covering-input-fix-but-flickering/1372/7?u=zach */
+.hide-footer .bar-footer, .hide-footer .tabs {
+  display: flex;
+}
+.hide-footer .has-footer, .hide-footer .has-tabs {
+  bottom: 44px; 
 }
 
 .item-content p {
@@ -158,18 +166,19 @@ dd:last-child {
   line-height: 18px;
 }
 
+input.stable::-webkit-input-placeholder {
+   color: #ACACAC;
+}
+
+input.assertive::-webkit-input-placeholder {
+   color: #cc2311;
+}
+
 #chat-send {
   font-size: 25px;
   color: #145fd7;
   float: right;
   margin-top: -2px;
-}
-
-.hide-footer .bar-footer, .hide-footer .tabs {
-  display: flex;
-}
-.hide-footer .has-footer, .hide-footer .has-tabs {
-  bottom: 44px; 
 }
 
 
@@ -314,4 +323,4 @@ body { overflow: hidden }
     100% {
         margin-left:50px;
     }
-}*/
+}

@@ -1,17 +1,19 @@
 <ion-view title="'Chat'" left-buttons="leftButtons">
-	<ion-content has-header="true" has-footer="true" padding="false">
+	<ion-content has-header="true"
+				 has-footer="true"
+				 padding="false"
+				 has-bouncing="true">
 		<ion-list option-buttons="itemButtons"
-				  can-swipe="false"
+				  can-swipe="true"
+				  option-buttons="itemButtons"
 				  ng-show="messages">
 
 			<ion-item ng-repeat="message in messages | orderByPriority"
 					  item="item"
-					  can-swipe="false">
+					  can-swipe="true">
 				<h2>{{ message.user }}</h2>
 				<p>{{ message.text }}</p>
 			</ion-item>
-
-			<p class="error" ng-show="err">{{err}}</p>
 		</ion-list>
 	</ion-content>
 
@@ -19,7 +21,8 @@
 		<form>
 			<label class="item-input-wrapper">
 				<input type="text"
-					   placeholder="something on your mind?"
+					   class="{{ feeling }}"
+					   placeholder="{{ feedback }}"
 					   ng-model="data.newMessage" />
 			</label>
 

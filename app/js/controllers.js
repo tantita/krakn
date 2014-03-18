@@ -52,20 +52,28 @@ angular.module('krakn.controllers', [
 
       // constrain number of messages by limit into syncData
       // add the array into $scope.messages
-      $scope.messages = syncData('messages');
+      $scope.messages = syncData('messages', 20);
+
+      // displayed as chat input placholder
+      $scope.feedback = 'something on your mind?';
+      // displays as class on chat input placeholder
+      $scope.feeling  = 'stable';
 
       // add new messages to the list
       $scope.addMessage = function() {
-         $scope.err = null;
          if( $scope.data.newMessage ) {
             $scope.messages.$add({
                                     text: $scope.data.newMessage
                                     // , user: $scope.user.name
                                 });
             $scope.data.newMessage = null;
+
+            $scope.feedback = 'Done! What\'s next?';
+            $scope.feeling  = 'stable';
          }
          else {
-            $scope.err = 'Please include a message before posting';
+            $scope.feedback = 'Please write a message before sending';
+            $scope.feeling  = 'assertive';
          }
       };
 
@@ -101,6 +109,17 @@ angular.module('krakn.controllers', [
      $scope.hide = function(){
        $scope.loading.hide();
      };
+
+
+     $scope.itemButtons = [
+       {
+         text: '',
+         type: 'button-assertive icon ion-android-trash',
+         onTap: function(item) {
+           alert('Delete Item: ' + item.id);
+         }
+       }
+     ];
    }])
 
 
