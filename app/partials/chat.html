@@ -16,13 +16,14 @@
 	</ion-content>
 
 	<div id="chat-input" class="bar bar-footer bar-stable">
-		<label class="item-input-wrapper">
-			<input type="text"
-				   autofocus
-				   placeholder="something on your mind?"
-				   ng-model="data.newMessage" />
-		</label>
+		<form>
+			<label class="item-input-wrapper">
+				<input type="text"
+					   placeholder="something on your mind?"
+					   ng-model="data.newMessage" />
+			</label>
 
-		<button type="submit" id="chat-send" class="button button-small button-positive" ng-click="addMessage()"><span class="ion-android-send"></span></button>
+			<button type="submit" id="chat-send" class="button button-small button-clear" ng-click="addMessage()"><span class="ion-android-send"></span></button>
+		</form>
 	</div> <!-- end .bar-footer -->
 </ion-view>

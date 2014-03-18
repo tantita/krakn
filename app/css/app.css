@@ -1,5 +1,5 @@
 /*==========================================
-  Ionic enhancements
+  Ionic overrides & enhancements
 ==========================================*/
 
 .hide {
@@ -47,9 +47,13 @@ p.status.good, p.good {
    color: green;
 }
 
+form {
+  margin: 0px 0px 1.42857px;
+}
+
 form label {
    display: block;
-   margin: 15px 0;
+   /*margin: 15px 0;*/
 }
 
 form label span {
@@ -69,6 +73,11 @@ fieldset {
 
 [ng\:cloak], [ng-cloak], [data-ng-cloak], [x-ng-cloak], .ng-cloak, .x-ng-cloak {
     display: none !important;
+}
+
+.item-content p {
+  overflow: visible;
+  white-space: pre-wrap; 
 }
 
 
@@ -113,7 +122,7 @@ dd:last-child {
 ==========================================*/
 
 .list {
-  
+
 }
 
 .list .item {
@@ -129,7 +138,17 @@ dd:last-child {
 }
 
 #chat-input {
-  border-top: 2px solid #ACACAC;
+  border-top: 3px solid #ACACAC;
+  background-color: #ACACAC;
+}
+
+#chat-input form {
+  width: 100%;
+}
+
+#chat-input .item-input-wrapper {
+  width: 85%;
+  float: left;
 }
 
 #chat-input input {
@@ -140,7 +159,17 @@ dd:last-child {
 }
 
 #chat-send {
-  font-size: 20px;
+  font-size: 25px;
+  color: #145fd7;
+  float: right;
+  margin-top: -2px;
+}
+
+.hide-footer .bar-footer, .hide-footer .tabs {
+  display: flex;
+}
+.hide-footer .has-footer, .hide-footer .has-tabs {
+  bottom: 44px; 
 }
 
 
