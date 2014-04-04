@@ -40,7 +40,7 @@ angular.module('krakn.controllers', [
       function($scope, syncData, $ionicScrollDelegate, $ionicLoading, $rootScope) {
          // split email on @ for minor privacy improvement before binding to $scope
          var userEmail = $rootScope.auth.user.email,
-             userName = userEmail.split('@');
+             userName  = userEmail.split('@');
 
          $scope.data = {
             newMessage      : null,
