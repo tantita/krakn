@@ -36,18 +36,12 @@ angular.module('krakn.controllers', [
    }])
 
 
-  .controller('ChatCtrl', ['$scope', 'loginService', 'changeEmailService', 'firebaseRef', 'syncData', '$ionicScrollDelegate', '$ionicLoading', 'FBURL',
-      function($scope, loginService, changeEmailService, firebaseRef, syncData, $ionicScrollDelegate, $ionicLoading, FBURL) {
-         $scope.syncAccount = function() {
-            $scope.user = {};
-            syncData(['users', $scope.auth.user.uid]).$bind($scope, 'user');
-         };
-         // set initial binding
-         $scope.syncAccount();
+  .controller('ChatCtrl', ['$scope', 'syncData', '$ionicScrollDelegate', '$ionicLoading', '$rootScope',
+      function($scope, syncData, $ionicScrollDelegate, $ionicLoading, $rootScope) {
 
          $scope.data = {
             newMessage : null,
-            user       : $scope.user.name
+            user       : $rootScope.auth.user.email
          }
 
          // constrain number of messages by limit into syncData
@@ -61,7 +55,7 @@ angular.module('krakn.controllers', [
 
          // add new messages to the list
          $scope.addMessage = function() {
-            if( $scope.data.newMessage ) {
+            if( $scope.data.newMessage && $scope.data.user ) {
                $scope.messages.$add({
                                        text: $scope.data.newMessage,
                                        user: $scope.data.user
