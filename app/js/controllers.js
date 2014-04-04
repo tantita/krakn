@@ -38,10 +38,12 @@ angular.module('krakn.controllers', [
 
   .controller('ChatCtrl', ['$scope', 'syncData', '$ionicScrollDelegate', '$ionicLoading', '$rootScope',
       function($scope, syncData, $ionicScrollDelegate, $ionicLoading, $rootScope) {
+         var userEmail = $rootScope.auth.user.email,
+             userName = userEmail.split('@');
 
          $scope.data = {
             newMessage : null,
-            user       : $rootScope.auth.user.email
+            user       : userName[0]
          }
 
          // constrain number of messages by limit into syncData
