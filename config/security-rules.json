@@ -11,12 +11,15 @@
          ".read": true,
          "$message": {
             ".write": true,
-            ".validate": "newData.hasChildren(['text', 'user'])",
+            ".validate": "newData.hasChildren(['text', 'user', 'receivedTime'])",
             "text": {
                ".validate": "newData.isString() && newData.val().length <= 1000"
             },
             "user": {
                ".validate": "newData.isString() && newData.val().length <= 2000"
+            },
+            "receivedTime": {
+               ".validate": "newData.isNumber()"
             },
             "$other": {
                ".validate": false

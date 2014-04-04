@@ -38,17 +38,22 @@ angular.module('krakn.controllers', [
 
   .controller('ChatCtrl', ['$scope', 'syncData', '$ionicScrollDelegate', '$ionicLoading', '$rootScope',
       function($scope, syncData, $ionicScrollDelegate, $ionicLoading, $rootScope) {
+         // split email on @ for minor privacy improvement before binding to $scope
          var userEmail = $rootScope.auth.user.email,
              userName = userEmail.split('@');
 
          $scope.data = {
-            newMessage : null,
-            user       : userName[0]
+            newMessage      : null,
+            user            : userName[0],
+            receivedTime    : Number(new Date())
          }
 
          // constrain number of messages by limit into syncData
          // add the array into $scope.messages
          $scope.messages = syncData('messages', 20);
+
+         // scroll to bottom of list on view loaded
+         $ionicScrollDelegate.scrollBottom(true);
 
          // displayed as chat input placholder
          $scope.feedback = 'something on your mind?';
@@ -57,15 +62,20 @@ angular.module('krakn.controllers', [
 
          // add new messages to the list
          $scope.addMessage = function() {
-            if( $scope.data.newMessage && $scope.data.user ) {
+            if(    $scope.data.newMessage
+                && $scope.data.user
+                && $scope.data.receivedTime ) {
+              // new data elements cannot be synced without adding them to FB Security Rules
                $scope.messages.$add({
-                                       text: $scope.data.newMessage,
-                                       user: $scope.data.user
+                                       text         : $scope.data.newMessage,
+                                       user         : $scope.data.user,
+                                       receivedTime : $scope.data.receivedTime
                                    });
+               // clean up
                $scope.data.newMessage = null;
 
                // scroll the view up when new message added
-               $ionicScrollDelegate.scrollBottom(true);
+               // $ionicScrollDelegate.scrollBottom(true);
 
                $scope.feedback = 'Done! What\'s next?';
                $scope.feeling  = 'stable';

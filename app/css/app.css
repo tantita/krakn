@@ -1,4 +1,4 @@
-==========================================
+/*==========================================
   Ionic overrides & enhancements
 ==========================================*/
 
@@ -179,6 +179,14 @@ input.assertive::-webkit-input-placeholder {
   color: #145fd7;
   float: right;
   margin-top: -2px;
+}
+
+small.time {
+  font-size: 75%;
+  position: absolute;
+  right: 15px;
+  top: 15px;
+  color: rgba(1,1,1,0.4);
 }
 
 
