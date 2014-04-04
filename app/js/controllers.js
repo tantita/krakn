@@ -44,8 +44,7 @@ angular.module('krakn.controllers', [
 
          $scope.data = {
             newMessage      : null,
-            user            : userName[0],
-            receivedTime    : Number(new Date())
+            user            : userName[0]
          }
 
          // constrain number of messages by limit into syncData
@@ -63,13 +62,12 @@ angular.module('krakn.controllers', [
          // add new messages to the list
          $scope.addMessage = function() {
             if(    $scope.data.newMessage
-                && $scope.data.user
-                && $scope.data.receivedTime ) {
+                && $scope.data.user ) {
               // new data elements cannot be synced without adding them to FB Security Rules
                $scope.messages.$add({
                                        text         : $scope.data.newMessage,
                                        user         : $scope.data.user,
-                                       receivedTime : $scope.data.receivedTime
+                                       receivedTime : Number(new Date())
                                    });
                // clean up
                $scope.data.newMessage = null;
