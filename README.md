@@ -1,6 +1,7 @@
 # krakn
 ### Real-time chat application built with AngularJS, Firebase & Ionic
 
+[![Gitter chat](https://badges.gitter.im/XachMoreno/krakn.png)](https://gitter.im/XachMoreno/krakn)
 
 ## Directory Layout
 
